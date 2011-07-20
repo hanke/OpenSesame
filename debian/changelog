@@ -1,3 +1,10 @@
+opensesame (0.24-1) unstable; urgency=low
+
+  * New upstream release. Added new PsychoPy and OpenGL backends.
+  * Bumped Standards-version to 3.9.2; no changes necessary.
+
+ -- Michael Hanke <mih@debian.org>  Wed, 20 Jul 2011 14:47:21 -0400
+
 opensesame (0.23+git1-g0212357-1) unstable; urgency=low
 
   * New upstream release. Package from subsequent Git commit as upstream removed
