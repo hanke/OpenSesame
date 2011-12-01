@@ -1,1 +1,3 @@
-tutorial/Mathot_OpenSesame_Tutorial.odt
+tutorials/tutorial/*.odt
+tutorials/crashcourse/*.odt
+tutorials/crashcourse/*.opensesame

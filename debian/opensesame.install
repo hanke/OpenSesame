@@ -1,1 +1,2 @@
 data/*.desktop usr/share/applications
+tutorials/tutorial/steps/* usr/share/doc/opensesame/tutorial-steps
