@@ -50,12 +50,11 @@ psycho = {
 	
 backend_list = {}
 backend_list["legacy"] = legacy
-backend_list["psycho"] = psycho
+backend_list["opengl"] = opengl
 
-# PyOpenGL doesn't play nice with Py2exe, so for now it's just not available
-# in the Windows package
-if os.path.basename(sys.argv[0]) != "opensesame.exe":
-	backend_list["opengl"] = opengl
+# So far, the psycho back-end doesn't work on Mac OS (darwin)
+if sys.platform != "darwin":
+	backend_list["psycho"] = psycho
 
 def match(experiment):
 
@@ -70,16 +69,12 @@ def match(experiment):
 	The name of the backend or "custom" if no matching backend is found
 	"""
 	
-	for name in backend_list:
-	
-		backend = backend_list[name]
-	
+	for name in backend_list:	
+		backend = backend_list[name]	
 		if experiment.canvas_backend == backend["canvas"] and \
 			experiment.keyboard_backend == backend["keyboard"] and \
 			experiment.mouse_backend == backend["mouse"] and \
 			experiment.sampler_backend == backend["sampler"] and \
-			experiment.synth_backend == backend["synth"]:
-			
+			experiment.synth_backend == backend["synth"]:			
 			return name
-			
 	return "custom"

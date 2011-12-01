@@ -255,14 +255,40 @@ class logger(libopensesame.logger.logger, libqtopensesame.qtitem.qtitem):
 
 		"""Select a custom variable by name that is not recognized"""
 
-		var, ok = QtGui.QInputDialog.getText(self.experiment.main_window.ui.centralwidget, "Add custom variable", "Which variable do you wish to log?")
+		var, ok = QtGui.QInputDialog.getText( \
+			self.experiment.main_window.ui.centralwidget, \
+			"Add custom variable", "Which variable do you wish to log?")
 		if ok:
-			var = self.experiment.sanitize(str(var).strip(), True)
+			var = self.experiment.sanitize(var, strict=True, allow_vars=False)
 			if var == "":
-				self.experiment.notify("The variable name you entered was not valid. A variable name may consist of characters, numbers and underscores.")
+				self.experiment.notify( \
+					"The variable name you entered was not valid. A variable name may consist of characters, numbers and underscores.")
 				return
 			if var not in self.logvars:
 				self.logvars.append(var)
 				self.edit_widget()
 				self.experiment.main_window.refresh(self.name)
+				
+	def rename_var(self, item, from_name, to_name):
+	
+		"""
+		A notification that a variable has been renamed
+		
+		Arguments:
+		item -- the item doing the renaming		
+		from_name -- the old variable name
+		to_name -- the new variable name
+		"""
+	
+		if from_name in self.logvars:
+			if self.experiment.debug:
+				print "logger.rename_var(): '%s' has been renamed to '%s'" % (from_name, to_name)				
+			resp = QtGui.QMessageBox.question(self.experiment.main_window, "Use new name in logger?",
+				"Do you want to use the new name in the logger item '%s' as well?" % self.name,
+				QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+			if resp == QtGui.QMessageBox.No:
+				return				
+			self.logvars.remove(from_name)
+			self.logvars.append(to_name)
+			self.edit_widget()
 

@@ -1,3 +1,10 @@
+opensesame (0.25-1) unstable; urgency=low
+
+  * Loads of bug-fixes.
+  * Editor component now uses Scintilla.
+    
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Tue, 08 Nov 2011 12:48:24 +0100
+
 opensesame (0.24-1) unstable; urgency=low
 
   * New upstream release. Added new PsychoPy and OpenGL backends.

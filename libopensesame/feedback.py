@@ -20,41 +20,54 @@ import shlex
 
 class feedback(sketchpad.sketchpad):
 
-	def __init__(self, name, experiment, string = None):
+	def __init__(self, name, experiment, string=None):
 	
 		"""
-		Initialize the feedback
+		Constructor
+		
+		Arguments:
+		name -- the item name
+		experiment -- the experiment
+		
+		Keyword arguments:
+		string -- a definitions tring (default=None)
 		"""
 
 		self.description = "Provides feedback to the participant"		
+		self.reset_variables = "yes"		
 		sketchpad.sketchpad.__init__(self, name, experiment, string)				
 		self.item_type = "feedback"			
 		
 	def prepare(self):
 		
 		"""
-		The feedback display does it's preparation
-		during the run phase
-		"""
+		Prepare for running. In the case of the feedback display, this means
+		doing nothing
 		
+		Returns:
+		True
+		"""
+				
 		return True
 		
 	def run(self):
 	
 		"""
-		Do the actual logging
+		Run the item (ie., show the feedback item)
+		
+		Returns:
+		True on success, False on Failure
 		"""
 		
 		try:
 			if not sketchpad.sketchpad.prepare(self):
 				return False
 		except exceptions.script_error as e:
-			raise exceptions.runtime_error("Failed to create feedback item '%s'" % self.name)
-			
-		# Reset the bookkeeping
-		self.experiment.total_responses = 0
-		self.experiment.total_correct = 0
-		self.experiment.total_response_time = 0
-			
-		return sketchpad.sketchpad.run(self)			
+			raise exceptions.runtime_error("Failed to create feedback item '%s'" % self.name)						
+		if not sketchpad.sketchpad.run(self):
+			return False			
+		
+		# Reset the bookkeeping		
+		if self.reset_variables == "yes":
+			self.experiment.reset_feedback()
 						
